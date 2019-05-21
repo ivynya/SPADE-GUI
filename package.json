@@ -1,0 +1,23 @@
+{
+  "name": "ugaugan",
+  "version": "1.0.0",
+  "description": "Attempted NVIDIA SPADE GauGAN GUI recreation",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDBagel/uGauGAN.git"
+  },
+  "author": "SDBagel",
+  "license": "CC-BY-NC-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/SDBagel/uGauGAN/issues"
+  },
+  "homepage": "https://github.com/SDBagel/uGauGAN#readme",
+  "devDependencies": {
+    "electron": "^5.0.1"
+  }
+}
