@@ -1,0 +1,37 @@
+html {
+  font-size: 24px;
+}
+
+.header {
+  background-color: #ddd;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  padding: 0 30px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.half {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  width: 50%;
+}
+
+.left {
+  background-color: #eef;
+  float: left;
+  left: 0;
+}
+
+.right {
+  background-color: #fee;
+  float: right;
+  right: 0;
+}
