@@ -1,3 +1,5 @@
+const jetpack = require('fs-jetpack');
+
 var mouseDown;
 var input, ctx;
 
@@ -16,11 +18,19 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener('mousedown', draw_mouseDown, false);
     input.addEventListener('mousemove', draw_mouseMove, false);
     window.addEventListener('mouseup', draw_mouseUp, false);
-
-    input.addEventListener('touchstart', draw_touchStart, false);
-    input.addEventListener('touchmove', draw_touchMove, false);
   }
 });
+
+// Saves image on canvas to file
+function saveImg(canvas) {
+  var img = canvas.toDataURL();
+
+  // strip off the data: url prefix to get just the base64-encoded bytes
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
+
+  jetpack.write("SPADE/img.png", buf);
+}
 
 // Draws a dot given size and greyscale value
 function drawDot(ctx, x, y, size, value) {
@@ -40,6 +50,7 @@ function draw_mouseDown() {
 
 function draw_mouseUp() {
   mouseDown = 0;
+  saveImg(input);
 }
 
 function draw_mouseMove(e) {
@@ -56,31 +67,4 @@ function getMousePos(e) {
 
   mouseX = e.layerX;
   mouseY = e.layerY;
-}
-
-// Sketchpad touch functions
-function draw_touchStart() {
-  getTouchPos();
-  drawDot(ctx, mouseX, mouseY, size, value);
-  event.preventDefault();
-}
-
-function draw_touchMove(e) {
-  getTouchPos(e);
-  drawDot(ctx, mouseX, mouseY, size, value);
-  event.preventDefault();
-}
-
-function getTouchPos(e) {
-  if (!e)
-    e = event;
-
-  if (e.touches) {
-    if (e.touches.length === 1) {
-      var touch = e.touches[0];
-
-      touchX = touch.pageX;
-      touchY = touch.pageY;
-    }
-  }
 }
