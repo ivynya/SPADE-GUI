@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (ctx) {
     input.addEventListener('mousedown', draw_mouseDown, false);
     input.addEventListener('mousemove', draw_mouseMove, false);
-    window.addEventListener('mouseup', draw_mouseUp, false);
+    input.addEventListener('mouseup', draw_mouseUp, false);
   }
 });
 
@@ -50,7 +50,7 @@ function saveImg(canvas) {
   setTimeout(function() {
     executeEnabled = true;
     document.getElementById("loading").style.opacity = 0;
-  }, 1500);
+  }, 2500);
 }
 
 function updateResult() {
@@ -71,7 +71,7 @@ function updateResult() {
     var d = new Date();
     document.getElementById("output").src = appPath +
       "/uSPADE/results/ade20k_pretrained/test_latest/images/synthesized_image/ADE_val_00000001.png?" + d.getMilliseconds();
-  }, 1500);
+  }, 2500);
 }
 
 // Draws a dot given size and greyscale value

@@ -18,7 +18,7 @@ body {
   padding: 0 30px;
 }
 
-.header h1 {
+.header .text {
   display: inline-block;
   color: #abc;
   margin: 0;
@@ -29,6 +29,15 @@ body {
 .controls {
   display: inline-block;
   float: right;
+}
+
+.controls input {
+  width: 50px;
+}
+
+.controls label {
+
+  font-size: 18px !important;
 }
 
 .half {

@@ -9,11 +9,13 @@
   </head>
   <body>
     <div class="header">
-      <h1>uGauGAN</h1>
+      <h1 class="text">uGauGAN</h1>
       <div id="loading" class="lds-dual-ring"></div>
       <div class="controls">
-        <input id="size" type="number" value="0" onchange="updateValues()">
-        <input id="value" type="number" value="0" onchange="updateValues()">
+        <label class="text" for="size">Brush Size: </label>
+        <input id="size" type="number" value="8" onchange="updateValues()">
+        <label class="text" for="value">Brush Type: </label>
+        <input id="value" type="number" value="22" onchange="updateValues()">
       </div>
     </div>
     <div class="half left">
