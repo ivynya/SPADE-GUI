@@ -38,8 +38,9 @@ function saveImg(canvas) {
 }
 
 function updateResult() {
-  // Execute python script to convert to greyscale and move to SPADE
   var appPath = app.getAppPath();
+
+  // Execute python script to convert to greyscale and move to SPADE
   const pyProcess = exec("python3 "+appPath+"/img/ctg.py");
   // Execute test.py with args to get resulting image
   const mlProcess = exec("python3 "+appPath+"/uSPADE/test.py " +
@@ -47,6 +48,12 @@ function updateResult() {
                          "--dataroot "+appPath+"/uSPADE/dataset " +
                          "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
                          "--results_dir "+appPath+"/uSPADE/results");
+
+  setTimeout(function() {
+    var d = new Date();
+    document.getElementById("output").src = appPath +
+      "/uSPADE/results/ade20k_pretrained/test_latest/images/synthesized_image/ADE_val_00000001.png?" + d.getMilliseconds();
+  }, 1000);
 }
 
 // Draws a dot given size and greyscale value
