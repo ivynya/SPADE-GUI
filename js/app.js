@@ -33,10 +33,20 @@ function saveImg(canvas) {
 
   // Write file to SPADE directory for processing
   jetpack.write("img/drawn.png", buf);
+
+  updateResult();
+}
+
+function updateResult() {
   // Execute python script to convert to greyscale and move to SPADE
   var appPath = app.getAppPath();
   const pyProcess = exec("python3 "+appPath+"/img/ctg.py");
-  // TODO: execute test.py with args to get resulting image
+  // Execute test.py with args to get resulting image
+  const mlProcess = exec("python3 "+appPath+"/uSPADE/test.py " +
+                         "--name ade20k_pretrained --dataset_mode ade20k " +
+                         "--dataroot "+appPath+"/uSPADE/dataset " +
+                         "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
+                         "--results_dir "+appPath+"/uSPADE/results");
 }
 
 // Draws a dot given size and greyscale value
