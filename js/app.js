@@ -1,4 +1,6 @@
 const jetpack = require('fs-jetpack');
+const app = require('electron').remote.app;
+const { exec } = require('child_process');
 
 var mouseDown;
 var input, ctx;
@@ -29,7 +31,12 @@ function saveImg(canvas) {
   var data = img.replace(/^data:image\/\w+;base64,/, "");
   var buf = new Buffer(data, 'base64');
 
-  jetpack.write("SPADE/img.png", buf);
+  // Write file to SPADE directory for processing
+  jetpack.write("img/drawn.png", buf);
+  // Execute python script to convert to greyscale and move to SPADE
+  var appPath = app.getAppPath();
+  const pyProcess = exec("python3 "+appPath+"/img/ctg.py");
+  // TODO: execute test.py with args to get resulting image
 }
 
 // Draws a dot given size and greyscale value
