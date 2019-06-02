@@ -5,6 +5,8 @@ const { exec } = require('child_process');
 var mouseDown;
 var input, ctx;
 
+var executeEnabled = true;
+
 var value = 22, size = 8;
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -25,6 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Saves image on canvas to file
 function saveImg(canvas) {
+  if (!executeEnabled)
+    return;
+
   var img = canvas.toDataURL();
 
   // strip off the data: url prefix to get just the base64-encoded bytes
@@ -35,6 +40,12 @@ function saveImg(canvas) {
   jetpack.write("img/drawn.png", buf);
 
   updateResult();
+  executeEnabled = false;
+  document.getElementById("loading").style.opacity = 1;
+  setTimeout(function() {
+    executeEnabled = true;
+    document.getElementById("loading").style.opacity = 0;
+  }, 1500);
 }
 
 function updateResult() {
@@ -47,17 +58,22 @@ function updateResult() {
                          "--name ade20k_pretrained --dataset_mode ade20k " +
                          "--dataroot "+appPath+"/uSPADE/dataset " +
                          "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
-                         "--results_dir "+appPath+"/uSPADE/results");
+                         "--results_dir "+appPath+"/uSPADE/results " +
+                         "--load_size 750 " +
+                         "--crop_size 750 ");
 
   setTimeout(function() {
     var d = new Date();
     document.getElementById("output").src = appPath +
       "/uSPADE/results/ade20k_pretrained/test_latest/images/synthesized_image/ADE_val_00000001.png?" + d.getMilliseconds();
-  }, 1000);
+  }, 1500);
 }
 
 // Draws a dot given size and greyscale value
 function drawDot(ctx, x, y, size, value) {
+  if (!executeEnabled)
+    return;
+
   ctx.fillStyle = "rgba(" + value +", " + value +", " + value + ", 1)";
 
   ctx.beginPath();
