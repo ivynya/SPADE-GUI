@@ -11,6 +11,10 @@
     <div class="header">
       <h1>uGauGAN</h1>
       <div id="loading" class="lds-dual-ring"></div>
+      <div class="controls">
+        <input id="size" type="number" value="0" onchange="updateValues()">
+        <input id="value" type="number" value="0" onchange="updateValues()">
+      </div>
     </div>
     <div class="half left">
       <canvas id="input"></canvas>

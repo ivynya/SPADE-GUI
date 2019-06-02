@@ -26,6 +26,11 @@ body {
   line-height: 50px;
 }
 
+.controls {
+  display: inline-block;
+  float: right;
+}
+
 .half {
   position: absolute;
   top: 50px;

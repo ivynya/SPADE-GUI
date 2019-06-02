@@ -25,6 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function updateValues() {
+  value = document.getElementById("value").value;
+  size = document.getElementById("size").value;
+}
+
 // Saves image on canvas to file
 function saveImg(canvas) {
   if (!executeEnabled)
