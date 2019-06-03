@@ -32,11 +32,10 @@ body {
 }
 
 .controls input {
-  width: 50px;
+  width: 70px;
 }
 
 .controls label {
-
   font-size: 18px !important;
 }
 

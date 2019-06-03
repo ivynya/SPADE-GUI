@@ -1,4 +1,5 @@
 const jetpack = require('fs-jetpack');
+const fs = require('fs');
 const app = require('electron').remote.app;
 const { exec } = require('child_process');
 
@@ -6,8 +7,10 @@ var mouseDown;
 var input, ctx;
 
 var executeEnabled = true;
+var manualUpdate = false;
 
 var value = 22, size = 8;
+var delay = 5000, cpuMode = false;
 
 document.addEventListener("DOMContentLoaded", function () {
   input = document.getElementById("input");
@@ -30,6 +33,26 @@ function updateValues() {
   size = document.getElementById("size").value;
 }
 
+function changeMode() {
+  cpuMode = !cpuMode;
+  if (cpuMode) {
+    delay = 120000;
+    document.getElementById("modeChange").value = "CPU";
+  }
+  else {
+    delay = 5000;
+    document.getElementById("modeChange").value = "GPU";
+  }
+}
+
+function toggleManualUpdate() {
+  manualUpdate = !manualUpdate;
+  if (manualUpdate)
+    document.getElementById("toggleManual").value = "Manual";
+  else
+    document.getElementById("toggleManual").value = "Auto";
+}
+
 // Saves image on canvas to file
 function saveImg(canvas) {
   if (!executeEnabled)
@@ -44,34 +67,43 @@ function saveImg(canvas) {
   // Write file to SPADE directory for processing
   jetpack.write("img/drawn.png", buf);
 
-  updateResult();
+  if (!manualUpdate)
+    updateResult();
+}
+
+function updateResult() {
+  if (!executeEnabled)
+    return;
+
   executeEnabled = false;
   document.getElementById("loading").style.opacity = 1;
   setTimeout(function() {
     executeEnabled = true;
     document.getElementById("loading").style.opacity = 0;
-  }, 5000);
-}
+  }, delay);
 
-function updateResult() {
   var appPath = app.getAppPath();
 
   // Execute python script to convert to greyscale and move to SPADE
   const pyProcess = exec("python3 "+appPath+"/img/ctg.py");
   // Execute test.py with args to get resulting image
-  const mlProcess = exec("python3 "+appPath+"/uSPADE/test.py " +
-                         "--name ade20k_pretrained --dataset_mode ade20k " +
-                         "--dataroot "+appPath+"/uSPADE/dataset " +
-                         "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
-                         "--results_dir "+appPath+"/uSPADE/results " +
-                         "--load_size 750 " +
-                         "--crop_size 750 ");
+  var executeStr = "python3 "+appPath+"/uSPADE/test.py " +
+                   "--name ade20k_pretrained --dataset_mode ade20k " +
+                   "--dataroot "+appPath+"/uSPADE/dataset " +
+                   "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
+                   "--results_dir "+appPath+"/uSPADE/results " +
+                   "--load_size 750 " +
+                   "--crop_size 750 ";
+  if (cpuMode)
+    executeStr += "--gpu_ids -1";
+
+  const mlProcess = exec(executeStr);
 
   setTimeout(function() {
     var d = new Date();
     document.getElementById("output").src = appPath +
       "/uSPADE/results/ade20k_pretrained/test_latest/images/synthesized_image/ADE_val_00000001.png?" + d.getMilliseconds();
-  }, 5000);
+  }, delay);
 }
 
 // Draws a dot given size and greyscale value
