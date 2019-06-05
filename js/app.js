@@ -1,5 +1,4 @@
 const jetpack = require('fs-jetpack');
-const fs = require('fs');
 const app = require('electron').remote.app;
 const { exec } = require('child_process');
 
@@ -10,7 +9,7 @@ var executeEnabled = true;
 var manualUpdate = false;
 
 var value = 22, size = 8;
-var delay = 5000, cpuMode = false;
+var cpuMode = false;
 
 document.addEventListener("DOMContentLoaded", function () {
   input = document.getElementById("input");
@@ -65,7 +64,7 @@ function saveImg(canvas) {
   var buf = new Buffer(data, 'base64');
 
   // Write file to SPADE directory for processing
-  jetpack.write("img/drawn.png", buf);
+  jetpack.write("util/drawn.png", buf);
 
   if (!manualUpdate)
     updateResult();
@@ -77,33 +76,32 @@ function updateResult() {
 
   executeEnabled = false;
   document.getElementById("loading").style.opacity = 1;
-  setTimeout(function() {
-    executeEnabled = true;
-    document.getElementById("loading").style.opacity = 0;
-  }, delay);
 
   var appPath = app.getAppPath();
 
   // Execute python script to convert to greyscale and move to SPADE
-  const pyProcess = exec("python3 "+appPath+"/img/ctg.py");
+  const pyProcess = exec("python3 "+appPath+"/util/ctg.py");
   // Execute test.py with args to get resulting image
   var executeStr = "python3 "+appPath+"/uSPADE/test.py " +
                    "--name ade20k_pretrained --dataset_mode ade20k " +
                    "--dataroot "+appPath+"/uSPADE/dataset " +
                    "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
                    "--results_dir "+appPath+"/uSPADE/results " +
-                   "--load_size 750 " +
-                   "--crop_size 750 ";
+                   "--load_size 700 " +
+                   "--crop_size 700 ";
   if (cpuMode)
     executeStr += "--gpu_ids -1";
 
   const mlProcess = exec(executeStr);
 
-  setTimeout(function() {
-    var d = new Date();
-    document.getElementById("output").src = appPath +
-      "/uSPADE/results/ade20k_pretrained/test_latest/images/synthesized_image/ADE_val_00000001.png?" + d.getMilliseconds();
-  }, delay);
+  mlProcess.on("close", function() {
+      executeEnabled = true;
+      document.getElementById("loading").style.opacity = 0;
+
+      var d = new Date();
+      document.getElementById("output").src = appPath +
+        "/uSPADE/results/ade20k_pretrained/test_latest/images/synthesized_image/ADE_val_00000001.png?" + d.getMilliseconds();
+  });
 }
 
 // Draws a dot given size and greyscale value
