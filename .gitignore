@@ -28,5 +28,6 @@ build/Release
 node_modules
 
 uSPADE/
+SPADE/
 
-img/drawn\.png
+util/drawn\.png

@@ -34,14 +34,10 @@ function updateValues() {
 
 function changeMode() {
   cpuMode = !cpuMode;
-  if (cpuMode) {
-    delay = 120000;
+  if (cpuMode)
     document.getElementById("modeChange").value = "CPU";
-  }
-  else {
-    delay = 5000;
+  else
     document.getElementById("modeChange").value = "GPU";
-  }
 }
 
 function toggleManualUpdate() {
