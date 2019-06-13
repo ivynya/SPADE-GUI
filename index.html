@@ -15,10 +15,10 @@
         <label class="text" for="size">Brush Size: </label>
         <input id="size" type="number" value="8" onchange="updateValues()">
         <label class="text" for="value">Brush Type: </label>
-        <input id="value" type="number" value="22" onchange="updateValues()">
-        <input id="modeChange" type="button" value="GPU" onclick="changeMode()">
-        <input id="toggleManual" type="button" value="Auto" onclick="toggleManualUpdate()">
-        <input id="update" type="button" value="Update" onclick="updateResult()">
+        <select id="value" onchange="updateValues()"></select>
+        <input class="button" id="modeChange" type="button" value="GPU" onclick="changeMode()">
+        <input class="button" id="toggleManual" type="button" value="Auto" onclick="toggleManualUpdate()">
+        <input class="button" id="update" type="button" value="Update" onclick="updateResult()">
       </div>
     </div>
     <div class="half left">

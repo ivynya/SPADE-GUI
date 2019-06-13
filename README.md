@@ -9,7 +9,7 @@ This app uses a modified version of SPADE that strips out unneeded components to
 
 The Git repository of SPADE and the licensing info can be found [here](https://github.com/NVlabs). While this code is licensed under MIT, the modified version of SPADE shares the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license provided by NVIDIA.
 
-The Flickr Landscapes (40k) data set shown in the video was not open sourced by NVIDIA and as such will likely not be supported, unless folks who trained the model themselves would be willing to share.
+The Flickr Landscapes (40k) data set shown in the video was not open sourced by NVIDIA, but was open sourced by some nice folks who trained the model themselves. I am looking at this currently and attempting to figure out how to integrate it with SPADE-GUI. This implementation will come before the COCO-Stuff dataset.
 
 # Install And Use
 

@@ -39,6 +39,21 @@ body {
   font-size: 18px !important;
 }
 
+.button {
+  border-radius: 2px;
+  background-color: #abc;
+  border: 0;
+  box-shadow: none;
+}
+
+.button:hover {
+  background-color: #bcd;
+}
+
+#update {
+  display: none;
+}
+
 .half {
   position: absolute;
   top: 50px;

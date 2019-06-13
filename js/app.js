@@ -8,7 +8,7 @@ var input, ctx;
 var executeEnabled = true;
 var manualUpdate = false;
 
-var value = 22, size = 8;
+var value = 1, size = 8;
 var cpuMode = false;
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -25,6 +25,20 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener('mousemove', draw_mouseMove, false);
     input.addEventListener('mouseup', draw_mouseUp, false);
   }
+
+  var ade_codes = JSON.parse(jetpack.read("./util/ade_codes.json", "utf8"));
+  var select = document.getElementById("value");
+  for (var i = 1; i <= Object.keys(ade_codes).length; i++) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.innerHTML = ade_codes[i];
+    select.appendChild(opt);
+  }
+});
+
+window.addEventListener("resize", function () {
+  input.height = innerHeight - 50;
+  input.width = innerWidth / 2;
 });
 
 function updateValues() {
@@ -42,10 +56,14 @@ function changeMode() {
 
 function toggleManualUpdate() {
   manualUpdate = !manualUpdate;
-  if (manualUpdate)
+  if (manualUpdate) {
     document.getElementById("toggleManual").value = "Manual";
-  else
+    document.getElementById("update").style.display = "inline-block";
+  }
+  else {
     document.getElementById("toggleManual").value = "Auto";
+    document.getElementById("update").style.display = "none";
+  }
 }
 
 // Saves image on canvas to file
@@ -83,8 +101,8 @@ function updateResult() {
                    "--dataroot "+appPath+"/uSPADE/dataset " +
                    "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
                    "--results_dir "+appPath+"/uSPADE/results " +
-                   "--load_size 700 " +
-                   "--crop_size 700 ";
+                   "--load_size " + input.height + " "
+                   "--crop_size " + input.height + " ";
   if (cpuMode)
     executeStr += "--gpu_ids -1";
 
