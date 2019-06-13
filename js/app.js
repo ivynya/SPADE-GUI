@@ -36,11 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-window.addEventListener("resize", function () {
-  input.height = innerHeight - 50;
-  input.width = innerWidth / 2;
-});
-
 function updateValues() {
   value = document.getElementById("value").value;
   size = document.getElementById("size").value;
@@ -100,9 +95,7 @@ function updateResult() {
                    "--name ade20k_pretrained --dataset_mode ade20k " +
                    "--dataroot "+appPath+"/uSPADE/dataset " +
                    "--checkpoints_dir "+appPath+"/uSPADE/checkpoints " +
-                   "--results_dir "+appPath+"/uSPADE/results " +
-                   "--load_size " + input.height + " "
-                   "--crop_size " + input.height + " ";
+                   "--results_dir "+appPath+"/uSPADE/results ";
   if (cpuMode)
     executeStr += "--gpu_ids -1";
 
