@@ -11,8 +11,35 @@ The Git repository of SPADE and the licensing info can be found [here](https://g
 
 The Flickr Landscapes (40k) data set shown in the video was not open sourced by NVIDIA, but was open sourced by some nice folks who trained the model themselves. I am looking at this currently and attempting to figure out how to integrate it with SPADE-GUI. This implementation will come before the COCO-Stuff dataset.
 
-# Install And Use
+# Install And Use - Prerequisites
+This repository does not have a packaged version of the app yet, as such, you will need to build it using npm.
 
-To install, please download [uSPADE](https://1drv.ms/u/s!AjdWHl830MgYujEEBuEQREKNar-o?e=rIz9MY), the modified version of SPADE for SPADE-GUI. Extract and place in the top directory of this repository. Run `pip install -r ./uSPADE/requirements.txt`. Then, run `pip install opencv-python`. Run `npm install` and `npm start`, and you should be good to go.
+To use SPADE-GUI, you need the following beforehand:
 
-Please note, SPADE-GUI only functions on Linux systems due to the dependencies not functioning on Windows. SPADE-GUI requires Python 3.x 64bit or higher to function, and the unpackaged version of this app requires NodeJS and NPM. This app is untested on macOS.
+1) Python 3.6 64bit
+
+2) Python 3.6 callable in terminal with `python3 file.py`
+
+3) Running Linux (I use [Solus](https://getsol.us/home/), comes with first two steps done)
+
+4) [uSPADE](https://1drv.ms/u/s!AjdWHl830MgYujEEBuEQREKNar-o?e=rIz9MY), the cut down version of SPADE for SPADE-GUI (~380MB vs 1.2GB)
+
+5) NPM / NodeJS
+
+# Install and Use - Installing SPADE-GUI
+
+After you have obtained everything listed above, you can continue with installation.
+
+1) Clone this repository to a directory on your computer
+
+2) Extract uSPADE into the top level directory so that the overall file structure would look something like `GitHub/SPADE-GUI/uSPADE/train.py`
+
+3) Open terminal and `cd SPADE-GUI`
+
+4) Run `python3 -m pip install -r pyrequirements.txt`
+
+5) Run `npm install` and `npm start`
+
+# Install and Use - Using SPADE-GUI
+
+The SPADE-GUI interface is designed to be much more user friendly in terms of synthesizing completely new images than the bare command line that SPADE uses. This is a quick description of use for those that may be confused. Upon launching the app, a top bar is shown along with a left section and right section, denoted by different shades of blue. The top bar allows you to pick the brush size, brush type, GPU/CPU mode, and manual or automatic updating of the live preview. If manual updating is chosen, an update button will appear, which when pressed, will trigger the update of the live preview. The left section is where a semantic map can be drawn, as shown in the demo image above. The right half will show the generated image from SPADE.
