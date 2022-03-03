@@ -1,0 +1,3 @@
+[submodule "SPADE"]
+	path = SPADE
+	url = https://github.com/NVlabs/SPADE
