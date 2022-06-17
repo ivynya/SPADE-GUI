@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/SDBagel/uGauGAN#readme",
   "devDependencies": {
-    "electron": "^13.6.6"
+    "electron": "^15.5.5"
   },
   "dependencies": {
     "fs-jetpack": "^2.2.3"
